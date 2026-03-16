@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+
+@import "tailwindcss";
+
+
+a.active hr{
+  display:block;
+}
+
+*{
+  font-family: outfit;
+} 
+
+.prata-regular {
+  font-family: "Prata", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.product-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.image-gallery {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+}
+
+.thumbnail-images {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.thumbnail-images img {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+}
+
+.product-info {
+    flex: 2;
+}
+
+.stars img {
+    width: 20px;
+    height: 20px;
+}
+
+.size-selection {
+    margin: 10px 0;
+}
+
+.size-selection button {
+    margin-right: 10px;
+}
+
+.add-to-cart {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.additional-info {
+    margin-top: 20px;
+}
