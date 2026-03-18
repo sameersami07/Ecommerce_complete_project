@@ -1,15 +1,35 @@
 import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/assets";
 
-export const ShopContext = createContext();
+export const ShopContext = createContext({
+  products: [],
+  currency: '$',
+  delivery_fee: 0,
+  search: '',
+  showSearch: false,
+  cartItems: {},
+  user: null,
+  addToCart: () => {},
+  removeFromCart: () => {},
+  updateQuantity: () => {},
+  getCartCount: () => 0,
+  clearCart: () => {},
+  logout: () => {}
+});
 
 const ShopContextProvider = (props) => {
     const currency ='$';
     const delivery_fee = 10;
     const [search,setSearch] = useState('');
     const[showSearch,setShowSearch]= useState(false);
-    const [cartItems,setCartItems] = useState({});
-    const [user, setUser] = useState(null);
+    const [cartItems,setCartItems] = useState(() => {
+        const savedCartItems = localStorage.getItem('cartItems');
+        return savedCartItems ? JSON.parse(savedCartItems) : {};
+    });
+    const [user, setUser] = useState(() => {
+        const savedUser = localStorage.getItem('user');
+        return savedUser ? JSON.parse(savedUser) : null;
+    });
 
     const addToCart =async (ItemId,size) =>{ 
         let cartData = structuredClone(cartItems);
@@ -52,22 +72,8 @@ const ShopContextProvider = (props) => {
         setCartItems(cartData);
     }
     useEffect(() => {
-        const savedCartItems = localStorage.getItem('cartItems');
-        if (savedCartItems) {
-            setCartItems(JSON.parse(savedCartItems));
-        }
-    }, []);
-
-    useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
-
-    useEffect(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            setUser(JSON.parse(savedUser));
-        }
-    }, []);
 
     useEffect(() => {
         if (user) localStorage.setItem('user', JSON.stringify(user));
