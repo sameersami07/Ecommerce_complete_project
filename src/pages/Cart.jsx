@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
@@ -130,9 +131,12 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <button className='w-full bg-black text-white py-3 text-sm font-medium mt-8 hover:bg-gray-800 transition'>
+                <Link
+                  to="/place-order"
+                  className='block text-center w-full bg-black text-white py-3 text-sm font-medium mt-8 hover:bg-gray-800 transition'
+                >
                   PROCEED TO CHECKOUT
-                </button>
+                </Link>
               </div>
             </div>
           </>

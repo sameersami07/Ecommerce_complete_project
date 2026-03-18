@@ -9,6 +9,7 @@ const ShopContextProvider = (props) => {
     const [search,setSearch] = useState('');
     const[showSearch,setShowSearch]= useState(false);
     const [cartItems,setCartItems] = useState({});
+    const [user, setUser] = useState(null);
 
     const addToCart =async (ItemId,size) =>{ 
         let cartData = structuredClone(cartItems);
@@ -61,10 +62,53 @@ const ShopContextProvider = (props) => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
 
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            setUser(JSON.parse(savedUser));
+        }
+    }, []);
+
+    useEffect(() => {
+        if (user) localStorage.setItem('user', JSON.stringify(user));
+        else localStorage.removeItem('user');
+    }, [user]);
+
+    const getCartCount = () => {
+        let totalCount = 0;
+        Object.values(cartItems).forEach(sizesObj => {
+            Object.values(sizesObj).forEach(quantity => {
+                totalCount += quantity;
+            });
+        });
+        return totalCount;
+    };
+
+    const clearCart = () => {
+        setCartItems({});
+    }
+
+    const logout = () => setUser(null);
+
 
     const value  ={
-        products,currency,delivery_fee,search,setSearch,showSearch,setShowSearch,cartItems,setCartItems,addToCart,removeFromCart,updateQuantity
-        
+        products,
+        currency,
+        delivery_fee,
+        search,
+        setSearch,
+        showSearch,
+        setShowSearch,
+        cartItems,
+        setCartItems,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        getCartCount,
+        clearCart,
+        user,
+        setUser,
+        logout
     }
     return (
         <ShopContext.Provider value={value}>

@@ -6,7 +6,7 @@ import { Link, NavLink } from 'react-router-dom'
 const Navbar = () => {
   const [visible, setVisible] = useState(false)
 
-  const { setShowSearch } = useContext(ShopContext);
+  const { setShowSearch, getCartCount, user, logout } = useContext(ShopContext);
 
   return (
     <div className="flex items-center justify-between py-5 font-medium">
@@ -36,9 +36,20 @@ const Navbar = () => {
           <img src={assets.profile_icon} alt="profile" className="w-5 cursor-pointer" />
           <div className="group-hover:block hidden absolute right-0 pt-4">
             <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded-md">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p className="cursor-pointer hover:text-black">Orders</p>
-              <p className="cursor-pointer hover:text-black">Logout</p>
+              {!user ? (
+                <Link to="/login" className="cursor-pointer hover:text-black">
+                  Login
+                </Link>
+              ) : (
+                <>
+                  <Link to="/orders" className="cursor-pointer hover:text-black">
+                    Orders
+                  </Link>
+                  <button onClick={logout} className="text-left cursor-pointer hover:text-black">
+                    Logout
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -47,7 +58,7 @@ const Navbar = () => {
         <Link to="/cart" className="relative">
           <img src={assets.cart_icon} alt="cart" className="w-5 min-w-5" />
           <p className="absolute right-[-5px] bottom-[-5px] w-4 h-4 flex items-center justify-center bg-black text-white text-xs rounded-md">
-            10
+            {getCartCount()}
           </p>
         </Link>
 
